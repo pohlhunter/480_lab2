@@ -138,38 +138,40 @@ public class Main{
         Stack<Integer> s = new Stack<>();
         
         String nextToken = "";
-        for (String token : infix.split("\\s")) {
-            
-            System.out.println("$" + infix[0] + "$");
-            
+        String[] parts = infix.split(" ");
+        for (int i = 0; i < parts.length; i++) {
+            String token;
+            token = parts[i]; // get the current token
+
             if (token.isEmpty())
                 continue;
             char c = token.charAt(0);
             int idx = ops.indexOf(c);
             
-            nextToken = "" + c;
-            System.out.println("next:" + nextToken);
-            
+                           
             // check for operator
             if (idx != -1) {
                 if (s.isEmpty()) {
                     s.push(idx);
                     System.out.println("c0");
-                } else if (nextToken.equals("+") && token.equals("-")) {      // if the one that was just enter was a - and the current is -  ->   then pop and insert +
-                    System.out.println("c1");
-                    s.pop();
-                    sb.append('-').append(' ');
-                    
-                } else if (nextToken.equals("-") && token.equals("-")) {      // if the one that was just enter was a - and the current is -  ->   then pop and insert +
-                    System.out.println("c2");
-                    s.pop();
-                    sb.append('+').append(' ');
-                    
-                } else if (nextToken.equals("-") && token.equals("+")) {      // if the one that was just enter was a - and the current is -  ->   then pop and insert +
-                    System.out.println("c3");
-                    s.pop();
-                    sb.append('-').append(' ');
-                    
+                } else if(i < (parts.length-1)) {    // if there is a next
+                     nextToken = parts[i + 1]; // get the next token
+                     System.out.println("next:" + nextToken);
+                     if (nextToken.equals("-") && token.equals("+")) {
+                        System.out.println("become -");
+                        sb.append('-').append(' ');
+                        break;
+                     }
+                     else if (nextToken.equals("+") && token.equals("-")) {
+                        System.out.println("become -");
+                        sb.append('-').append(' ');
+                        break;
+                     }
+                     else if (nextToken.equals("-") && token.equals("-")) {
+                        System.out.println("become +");
+                        sb.append('+').append(' ');
+                        break;
+                     }
                 } else {
                     while (!s.isEmpty()) {
                         int prec2 = s.peek() / 2;
