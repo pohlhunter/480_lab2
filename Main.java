@@ -8,11 +8,12 @@ public class Main{
     
 	public static void main(String[] args) {
 	    boolean lastWasNumber = false;
-        boolean canBeSolved = true;
+       boolean canBeSolved = true;
+       String previousSign = "";
 	    
 	    System.out.println("Type and enter one of the following: Positive Number, -, (, or one of the following sin, cos, tan, cot, ln, log10");
-       System.out.println("When you want to do one of the following sin, cos, tan, cot, ln, log10  -  enter just one then a space then the number you want that trigonmetric/logarithmic operation to evaluate");
-       System.out.println("Do not include any arithmetic inside sin, cos, tan, cot, ln, log10  -  must do only a number after. ENTER IN DEGREES, COMES OUT RADIANS. Example 'sin 45'");
+       System.out.println("When you want to do one of the following sin, cos, tan, cot, ln, log10  -  enter just one then then the number you want that trigonmetric/logarithmic operation to evaluate");
+       System.out.println("Do not include any arithmetic inside sin, cos, tan, cot, ln, log10  -  must do only a number after. ENTER IN DEGREES, COMES OUT RADIANS. Example 'sin45'");
        System.out.println("One thing per line entered. Do not do something like '+ 5' all on one line");
        System.out.println("DEGREES are the measurement entered, but it returns RADIANS. Enter negative numbers as: '-' enter then Number. [Do not do '-#']");
        System.out.println("Enter 'exit' to end early (without the ' ')");
@@ -23,118 +24,24 @@ public class Main{
 	    Scanner sc = new Scanner(System.in);
 		 String s  = sc.next();
 		
-      if (s.equals("ln 0")) {
+      if (s.equals("ln0")) {
          System.out.println("- Infinity");
 		   return;
       }
       
       
-      if (s.length() > 3) {      // smallest case is ln 0
-         if ((s.substring(0,3).equals("sin")) || (s.substring(0,3).equals("cos")) || (s.substring(0,3).equals("tan")) || (s.substring(0,3).equals("cot")) || (s.substring(0,2).equals("ln")) || (s.substring(0,5).equals("log10"))) {
-            if (s.substring(0,3).equals("sin")) {
-               try      //try doing .sin(#)     doing try to verify that it is a #
-                 {
-                     // convert the degrees to radians
-                     double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
-                     // calculate the input degrees sin
-         		      double sinValue = Math.sin(radians);
-         		      System.out.println(sinValue);
-                     s = Double.toString(sinValue); 
-                     infix = Double.toString(sinValue);
-                 }
-                 catch(Exception e)
-                 {
-                     System.out.println("Not valid");
-                     return;
-                 }
-            } else if (s.substring(0,3).equals("cos")) {
-               try      //try doing .cos(#)     doing try to verify that it is a #
-                 {
-                     // convert the degrees to radians
-                     double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
-                     // calculate the input degrees cos
-         		      double cosValue = Math.cos(radians);
-         		      //System.out.println(cosValue);
-                     s = Double.toString(cosValue); 
-                     infix = Double.toString(cosValue);
-                 }
-                 catch(Exception e)
-                 {
-                     System.out.println("Not valid");
-                     return;
-                 }
-            } else if (s.substring(0,3).equals("tan")) {
-               try      //try doing .tan(#)     doing try to verify that it is a #
-                 {
-                     // convert the degrees to radians
-                     double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
-                     // calculate the input degrees tan
-         		      double tanValue = Math.tan(radians);
-         		      //System.out.println(tanValue);
-                     s = Double.toString(tanValue); 
-                     infix = Double.toString(tanValue);
-                 }
-                 catch(Exception e)
-                 {
-                     System.out.println("Not valid");
-                     return;
-                 }
-            } else if (s.substring(0,3).equals("cot")) {
-               try      //try doing 1 / .tan(#)     doing try to verify that it is a #
-                 {
-                     // convert the degrees to radians
-                     double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
-                     // calculate the input degrees tan
-         		      double cotValue = 1 / (Math.tan(radians));
-         		      //System.out.println(cotValue);
-                     s = Double.toString(cotValue); 
-                     infix = Double.toString(cotValue);
-                 }
-                 catch(Exception e)
-                 {
-                     System.out.println("Not valid");
-                     return;
-                 }
-            } else if (s.substring(0,2).equals("ln")) {
-               try      //try doing .log(#)     doing try to verify that it is a #
-                 {
-                     // convert the degrees to radians
-                     double value = Double.parseDouble(s.substring(2,s.length()));
-                     // calculate the input degrees tan
-         		      double lnVal = Math.log(value);
-         		      //System.out.println(lnVal);
-                     s = Double.toString(lnVal); 
-                     infix = Double.toString(lnVal);
-                 }
-                 catch(Exception e)
-                 {
-                     System.out.println("Not valid");
-                     return;
-                 }
-            } else if (s.substring(0,5).equals("log10")) {
-               try      //try doing .log10(#)     doing try to verify that it is a #
-                 {
-                     // convert the degrees to radians
-                     double value = Double.parseDouble(s.substring(5,s.length()));
-                     System.out.println("s1");
-                     // calculate the input degrees tan
-         		      double logVal = Math.log10(value);
-                     System.out.println("s2");
-         		      //System.out.println(logVal);
-                     s = Double.toString(logVal); 
-                     System.out.println("s3");
-                     infix = Double.toString(logVal);
-                     System.out.println("s4");
-                 }
-                 catch(Exception e)
-                 {
-                     System.out.println("Not valid");
-                     return;
-                 }
-            }
-         }
-         lastWasNumber = true;      // this is being evaluated and pushed as a double
+      if (s.equals("-")) {
+         previousSign = "-";
       }
+      
+      try {
+          double stringVal = Double.parseDouble(s);
+          lastWasNumber = true;
+      } catch (NumberFormatException e) {
+      }
+      
+      
+      
       
 		if (s.equals("solve")) {
 		    System.out.println("Need to enter equation first");
@@ -142,29 +49,256 @@ public class Main{
 		} else if ((s.equals("*")) || (s.equals("/")) || (s.equals(")")) || (s.equals("^")) || (s.equals("+"))) {
 		    System.out.println("Cannot start with that");
 		    return;
-		} else if (!((s.equals("-")) || (s.equals("+")) || (s.equals("/")) || (s.equals("*")) || (s.equals("^")) || (s.equals("(")) || (s.equals(")")))) {
+		} else if ((s.length() > 3) && (lastWasNumber == false)) {      // smallest case is ln 0 {
+            if ((s.substring(0,3).equals("sin")) || (s.substring(0,3).equals("cos")) || (s.substring(0,3).equals("tan")) || (s.substring(0,3).equals("cot")) || (s.substring(0,2).equals("ln")) || (s.substring(0,5).equals("log10"))) {
+               if (s.substring(0,3).equals("sin")) {
+                  try      //try doing .sin(#)     doing try to verify that it is a #
+                    {
+                        // convert the degrees to radians
+                        double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
+                        // calculate the input degrees sin
+            		      double sinValue = Math.sin(radians);
+            		      System.out.println(sinValue);
+                        s = Double.toString(sinValue); 
+                        infix = Double.toString(sinValue);
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println("Not valid");
+                        return;
+                    }
+               } else if (s.substring(0,3).equals("cos")) {
+                  try      //try doing .cos(#)     doing try to verify that it is a #
+                    {
+                        // convert the degrees to radians
+                        double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
+                        // calculate the input degrees cos
+            		      double cosValue = Math.cos(radians);
+            		      //System.out.println(cosValue);
+                        s = Double.toString(cosValue); 
+                        infix = Double.toString(cosValue);
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println("Not valid");
+                        return;
+                    }
+               } else if (s.substring(0,3).equals("tan")) {
+                  try      //try doing .tan(#)     doing try to verify that it is a #
+                    {
+                        // convert the degrees to radians
+                        double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
+                        // calculate the input degrees tan
+            		      double tanValue = Math.tan(radians);
+            		      //System.out.println(tanValue);
+                        s = Double.toString(tanValue); 
+                        infix = Double.toString(tanValue);
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println("Not valid");
+                        return;
+                    }
+               } else if (s.substring(0,3).equals("cot")) {
+                  try      //try doing 1 / .tan(#)     doing try to verify that it is a #
+                    {
+                        // convert the degrees to radians
+                        double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
+                        // calculate the input degrees tan
+            		      double cotValue = 1 / (Math.tan(radians));
+            		      //System.out.println(cotValue);
+                        s = Double.toString(cotValue); 
+                        infix = Double.toString(cotValue);
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println("Not valid");
+                        return;
+                    }
+               } else if (s.substring(0,2).equals("ln")) {
+                  try      //try doing .log(#)     doing try to verify that it is a #
+                    {
+                        // convert the degrees to radians
+                        double value = Double.parseDouble(s.substring(2,s.length()));
+                        // calculate the input degrees tan
+            		      double lnVal = Math.log(value);
+            		      //System.out.println(lnVal);
+                        s = Double.toString(lnVal); 
+                        infix = Double.toString(lnVal);
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println("Not valid");
+                        return;
+                    }
+               } else if (s.substring(0,5).equals("log10")) {
+                  try      //try doing .log10(#)     doing try to verify that it is a #
+                    {
+                        // convert the degrees to radians
+                        double value = Double.parseDouble(s.substring(5,s.length()));
+                        System.out.println("s1");
+                        // calculate the input degrees tan
+            		      double logVal = Math.log10(value);
+                        System.out.println("s2");
+            		      //System.out.println(logVal);
+                        s = Double.toString(logVal); 
+                        System.out.println("s3");
+                        infix = Double.toString(logVal);
+                        System.out.println("s4");
+                    }
+                    catch(Exception e)
+                    {
+                        System.out.println("Not valid");
+                        return;
+                    }
+               }
+            }
+            lastWasNumber = true;      // this is being evaluated and pushed as a double
+      } else if (!((s.equals("-")) || (s.equals("+")) || (s.equals("/")) || (s.equals("*")) || (s.equals("^")) || (s.equals("(")) || (s.equals(")")))) {
         	lastWasNumber = true;
         	infix = s;
-        } else {
-		    infix = s;
+      } else {
+         try {
+             Double.parseDouble(s);
+             lastWasNumber = true;
+         } catch (NumberFormatException e) {
+         }
+         
+         infix = s;
 		}
       
       
       
         
         
+        
+        // get the input and evaluate function inputs if needed
         int itemCounter = 0;     // var to keep track of enters - to limit equatino size
         while ((!(s.equals("solve"))) && itemCounter < 50) {     // while the user is inputting something that is not solve
-            if(s.equals("exit")) {
+            if(s.equals("exit") || s.equals("quit")) {
                return;
             }
+            
+            
+            
             if (lastWasNumber == false) {
-        	        System.out.println("Use of the following: Positive Number, -, +, /, *, ^, (, )      type and enter 'solve' when ready (without the ' ')");
+        	        System.out.println("Use one of the following: Positive Number, -, +, /, *, ^, (, )      type and enter 'solve' when ready (without the ' ')");
         	        System.out.print("Next item:  ");
         	        s  = sc.next();
-        	        
+
+        	        boolean currentNumber = false;
+                 try {
+                     double stringVal = Double.parseDouble(s);
+                     currentNumber = true;
+                     //System.out.println("s" + s + " currentNumber" + currentNumber);
+                 } catch (NumberFormatException e) {
+                 }
+                 
         	        if (!(s.equals("solve"))) {
-        	            infix = infix + " " + s;
+        	            if ((s.length() > 2) && (currentNumber == false)) {      // smallest length case is ln#
+                        try {
+                           if ((s.substring(0,3).equals("sin")) || (s.substring(0,3).equals("cos")) || (s.substring(0,3).equals("tan")) || (s.substring(0,3).equals("cot")) || (s.substring(0,2).equals("ln")) || (s.substring(0,5).equals("log10"))) {
+                              if (s.substring(0,3).equals("sin")) {
+                                 try      //try doing .sin(#)     doing try to verify that it is a #
+                                   {
+                                       // convert the degrees to radians
+                                       double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
+                                       // calculate the input degrees sin
+                           		      double sinValue = Math.sin(radians);
+                           		      System.out.println(sinValue);
+                                       s = Double.toString(sinValue); 
+                                   }
+                                   catch(Exception e)
+                                   {
+                                       System.out.println("Not valid");
+                                       return;
+                                   }
+                              } else if (s.substring(0,3).equals("cos")) {
+                                 try      //try doing .cos(#)     doing try to verify that it is a #
+                                   {
+                                       // convert the degrees to radians
+                                       double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
+                                       // calculate the input degrees cos
+                           		      double cosValue = Math.cos(radians);
+                           		      //System.out.println(cosValue);
+                                       s = Double.toString(cosValue); 
+                                   }
+                                   catch(Exception e)
+                                   {
+                                       System.out.println("Not valid");
+                                       return;
+                                   }
+                              } else if (s.substring(0,3).equals("tan")) {
+                                 try      //try doing .tan(#)     doing try to verify that it is a #
+                                   {
+                                       // convert the degrees to radians
+                                       double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
+                                       // calculate the input degrees tan
+                           		      double tanValue = Math.tan(radians);
+                           		      //System.out.println(tanValue);
+                                       s = Double.toString(tanValue); 
+                                   }
+                                   catch(Exception e)
+                                   {
+                                       System.out.println("Not valid");
+                                       return;
+                                   }
+                              } else if (s.substring(0,3).equals("cot")) {
+                                 try      //try doing 1 / .tan(#)     doing try to verify that it is a #
+                                   {
+                                       // convert the degrees to radians
+                                       double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
+                                       // calculate the input degrees tan
+                           		      double cotValue = 1 / (Math.tan(radians));
+                           		      //System.out.println(cotValue);
+                                       s = Double.toString(cotValue); 
+                                   }
+                                   catch(Exception e)
+                                   {
+                                       System.out.println("Not valid");
+                                       return;
+                                   }
+                              } else if (s.substring(0,2).equals("ln")) {
+                                 try      //try doing .log(#)     doing try to verify that it is a #
+                                   {
+                                       // convert the degrees to radians
+                                       double value = Double.parseDouble(s.substring(2,s.length()));
+                                       // calculate the input degrees tan
+                           		      double lnVal = Math.log(value);
+                           		      //System.out.println(lnVal);
+                                       s = Double.toString(lnVal); 
+                                   }
+                                   catch(Exception e)
+                                   {
+                                       System.out.println("Not valid");
+                                       return;
+                                   }
+                              } else if (s.substring(0,5).equals("log10")) {
+                                 try      //try doing .log10(#)     doing try to verify that it is a #
+                                   {
+                                       // convert the degrees to radians
+                                       double value = Double.parseDouble(s.substring(5,s.length()));
+                                       System.out.println("s1");
+                                       // calculate the input degrees tan
+                           		      double logVal = Math.log10(value);
+                                       s = Double.toString(logVal); 
+                                   }
+                                   catch(Exception e)
+                                   {
+                                       System.out.println("Not valid");
+                                       return;
+                                   }
+                              }
+                           } 
+                        } catch (Exception e) {
+                           System.out.println("Not valid.");
+                           return;
+                        }
+                        
+                        
+                        lastWasNumber = true;      // this is being evaluated and pushed as a double
+                     }
+                     infix = infix + " " + s;
         	        }
         	        
         	        if (!((s.equals("-")) || (s.equals("+")) || (s.equals("/")) || (s.equals("*")) || (s.equals("^")) || (s.equals("(")) || (s.equals(")")))) {
@@ -183,10 +317,10 @@ public class Main{
         	        System.out.print("\n");
         	    
             } else {
-        	        System.out.println("Use of the following: -, +, /, *, ^, (, )      type and enter 'solve' when ready (without the ' ')");
+        	        System.out.println("Use one of the following: -, +, /, *, ^, (, )      type and enter 'solve' when ready (without the ' ')");
         	        System.out.print("Next item:  ");
         	        s  = sc.next();
-        	        
+
         	        if ((s.equals("-")) || (s.equals("+")) || (s.equals("/")) || (s.equals("*")) || (s.equals("^")) || (s.equals("(")) || (s.equals(")"))) {
         	            infix = infix + " " + s;
         	            lastWasNumber = false;
@@ -199,121 +333,18 @@ public class Main{
                            canBeSolved = true;
                          }
                      }
-        	        } else if (s.length() > 3) {      // smallest case is ln 0
-                     if ((s.substring(0,3).equals("sin")) || (s.substring(0,3).equals("cos")) || (s.substring(0,3).equals("tan")) || (s.substring(0,3).equals("cot")) || (s.substring(0,2).equals("ln")) || (s.substring(0,5).equals("log10"))) {
-                        if (s.substring(0,3).equals("sin")) {
-                           try      //try doing .sin(#)     doing try to verify that it is a #
-                             {
-                                 // convert the degrees to radians
-                                 double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
-                                 // calculate the input degrees sin
-                     		      double sinValue = Math.sin(radians);
-                     		      System.out.println(sinValue);
-                                 s = Double.toString(sinValue); 
-                                 infix = Double.toString(sinValue);
-                             }
-                             catch(Exception e)
-                             {
-                                 System.out.println("Not valid");
-                                 return;
-                             }
-                        } else if (s.substring(0,3).equals("cos")) {
-                           try      //try doing .cos(#)     doing try to verify that it is a #
-                             {
-                                 // convert the degrees to radians
-                                 double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
-                                 // calculate the input degrees cos
-                     		      double cosValue = Math.cos(radians);
-                     		      //System.out.println(cosValue);
-                                 s = Double.toString(cosValue); 
-                                 infix = Double.toString(cosValue);
-                             }
-                             catch(Exception e)
-                             {
-                                 System.out.println("Not valid");
-                                 return;
-                             }
-                        } else if (s.substring(0,3).equals("tan")) {
-                           try      //try doing .tan(#)     doing try to verify that it is a #
-                             {
-                                 // convert the degrees to radians
-                                 double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
-                                 // calculate the input degrees tan
-                     		      double tanValue = Math.tan(radians);
-                     		      //System.out.println(tanValue);
-                                 s = Double.toString(tanValue); 
-                                 infix = Double.toString(tanValue);
-                             }
-                             catch(Exception e)
-                             {
-                                 System.out.println("Not valid");
-                                 return;
-                             }
-                        } else if (s.substring(0,3).equals("cot")) {
-                           try      //try doing 1 / .tan(#)     doing try to verify that it is a #
-                             {
-                                 // convert the degrees to radians
-                                 double radians = Math.toRadians(Double.parseDouble(s.substring(3,s.length())));
-                                 // calculate the input degrees tan
-                     		      double cotValue = 1 / (Math.tan(radians));
-                     		      //System.out.println(cotValue);
-                                 s = Double.toString(cotValue); 
-                                 infix = Double.toString(cotValue);
-                             }
-                             catch(Exception e)
-                             {
-                                 System.out.println("Not valid");
-                                 return;
-                             }
-                        } else if (s.substring(0,2).equals("ln")) {
-                           try      //try doing .log(#)     doing try to verify that it is a #
-                             {
-                                 // convert the degrees to radians
-                                 double value = Double.parseDouble(s.substring(2,s.length()));
-                                 // calculate the input degrees tan
-                     		      double lnVal = Math.log(value);
-                     		      //System.out.println(lnVal);
-                                 s = Double.toString(lnVal); 
-                                 infix = Double.toString(lnVal);
-                             }
-                             catch(Exception e)
-                             {
-                                 System.out.println("Not valid");
-                                 return;
-                             }
-                        } else if (s.substring(0,5).equals("log10")) {
-                           try      //try doing .log10(#)     doing try to verify that it is a #
-                             {
-                                 // convert the degrees to radians
-                                 double value = Double.parseDouble(s.substring(5,s.length()));
-                                 System.out.println("s1");
-                                 // calculate the input degrees tan
-                     		      double logVal = Math.log10(value);
-                                 System.out.println("s2");
-                     		      //System.out.println(logVal);
-                                 s = Double.toString(logVal); 
-                                 System.out.println("s3");
-                                 infix = Double.toString(logVal);
-                                 System.out.println("s4");
-                             }
-                             catch(Exception e)
-                             {
-                                 System.out.println("Not valid");
-                                 return;
-                             }
-                        }
-                     }
-                     lastWasNumber = true;      // this is being evaluated and pushed as a double
-                  }
-                 
-                 
-                 
+        	        } 
         	        System.out.print("\n");
             }
             ++itemCounter;
         }
         
-        //first check if itemCounter restriction was reached
+        
+        
+        
+        
+        
+       //first check if itemCounter restriction was reached
         if (itemCounter > 49) {
             System.out.println("Equation was too long - entered information too many times.");
         	   return;
@@ -329,16 +360,16 @@ public class Main{
 		
         System.out.printf("infix:   %s%n", infix);
         
-        //try - putting it to post fix
-        try
-        {
-            System.out.printf("postfix: %s%n", infixToPostfix(infix));
-        }
-        catch(Exception e)
-        {
-            System.out.println("Equation invalid");
-            return;
-        }
+//         //try - putting it to post fix
+//         try
+//         {
+//             System.out.printf("postfix: %s%n", infixToPostfix(infix));
+//         }
+//         catch(Exception e)
+//         {
+//             System.out.println("Equation invalid");
+//             return;
+//         }
     
       //try - using the post fix from above -> putting it thru reverse polish notation
       try
@@ -353,6 +384,12 @@ public class Main{
         }
 	}
 
+
+
+
+
+
+
     
     //https://rosettacode.org/wiki/Parsing/Shunting-yard_algorithm#Java
     static String infixToPostfix(String infix) {
@@ -364,7 +401,8 @@ public class Main{
         StringBuilder sb = new StringBuilder();
         Stack<Integer> s = new Stack<>();
         
-        String nextToken = "";
+        int specialCase = 0;
+        
         String[] parts = infix.split(" ");
         for (int i = 0; i < parts.length; i++) {
             String token;
@@ -375,30 +413,30 @@ public class Main{
             char c = token.charAt(0);
             int idx = ops.indexOf(c);
             
-                           
-            // check for operator
-            if (idx != -1) {
+            if ((parts[i].equals("-") && parts[i + 1].equals("-")) || (parts[i].equals("+") && parts[i + 1].equals("-")) || (parts[i].equals("-") && parts[i + 1].equals("+"))) {
+               //System.out.println("token before: " + token);
+               if (parts[i].equals("-") && parts[i + 1].equals("-")) {
+                     //System.out.println("become +");
+                     idx = 1;
+                     specialCase = 1;
+                     token = "+";
+               } else if (parts[i].equals("+") && parts[i + 1].equals("-")) {
+                     //System.out.println("become -");
+                     idx = 0;
+                     specialCase = 2;
+                     token = "-";
+               } else if (parts[i].equals("-") && parts[i + 1].equals("+")) {
+                     //System.out.println("become -");
+                     idx = 0;
+                     specialCase = 3;
+                     token = "-";
+               }
+               //System.out.println("token after: " + token);
+            }
+
+            else if (idx != -1) {          // check for regular operator
                 if (s.isEmpty()) {
                     s.push(idx);
-                    System.out.println("c0");
-                } else if(i < (parts.length-1)) {    // if there is a next
-                     nextToken = parts[i + 1]; // get the next token
-                     System.out.println("next:" + nextToken);
-                     if (nextToken.equals("-") && token.equals("+")) {
-                        System.out.println("become -");
-                        sb.append('-').append(' ');
-                        break;
-                     }
-                     else if (nextToken.equals("+") && token.equals("-")) {
-                        System.out.println("become -");
-                        sb.append('-').append(' ');
-                        break;
-                     }
-                     else if (nextToken.equals("-") && token.equals("-")) {
-                        System.out.println("become +");
-                        sb.append('+').append(' ');
-                        break;
-                     }
                 } else {
                     while (!s.isEmpty()) {
                         int prec2 = s.peek() / 2;
@@ -420,15 +458,44 @@ public class Main{
                 s.pop();
             }
             else {
+                //System.out.println("1   BOTTOM ELSE. " + "token: " + token + ". sb: " + sb.toString());
                 sb.append(token).append(' ');
+                //System.out.println("2    BOTTOM ELSE. " + "token: " + token + ". sb: " + sb.toString());
             }
+            
+
         
         }
-        while (!s.isEmpty())
+        while (!s.isEmpty()) {
+            //System.out.println("3    BOTTOM ELSE. sb: " + sb.toString());
+            //System.out.println("    s.peek(): " + s.peek() + "  specialCase: " + specialCase);
+            if (specialCase == 1) {    // - - turns into +
+               s.pop();
+               s.push(1);
+            }
+            if (specialCase == 2) {    // + - turns into -
+               s.pop();
+               s.push(0);
+            }
+            if (specialCase == 3) {    // - + turns into -
+               s.pop();
+               s.push(0);
+            }
+            specialCase = 0;
             sb.append(ops.charAt(s.pop())).append(' ');
+            //System.out.println("4    BOTTOM ELSE. sb: " + sb.toString());
+        }
         
+        System.out.println("final postfix equation:  " + sb.toString());
         return sb.toString();
     }
+
+
+
+
+
+
+
 
 
 
@@ -439,8 +506,8 @@ public class Main{
 		LinkedList<Double> stack = new LinkedList<Double>();
 		System.out.println("Input\tOperation\tStack after");
 		for (String token : expr.split("\\s")){
-         System.out.print("\n  ~" + expr + "~   ");
-         System.out.print("  ~ " + token + " ~   \n");
+         System.out.print("\n" + expr + "");
+         System.out.print("    " + token + "\n");
       
 			System.out.print(token + "\t");
 			if (token.equals("*")) {
