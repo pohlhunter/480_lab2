@@ -163,8 +163,12 @@ public class Main{
              lastWasNumber = true;
          } catch (NumberFormatException e) {
          }
+         if (s.equals("-")) {
+            infix = "0 " + s;
+         } else {
+            infix = s;
+         }
          
-         infix = s;
 		}
       
       
