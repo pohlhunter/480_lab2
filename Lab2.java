@@ -13,7 +13,7 @@ public class Lab2 {
     boolean canBeSolved = true;
     String previousSign = "";
 
-    System.out.println("Type and enter one of the following: Positive Number, -, (, or one of the following sin, cos, tan, cot, ln, log10");
+    System.out.println("Type and enter one of the following: Positive Number, -, (, { or one of the following sin, cos, tan, cot, ln, log10");
     System.out.println("When you want to do one of the following sin, cos, tan, cot, ln, log10  -  enter just one then then the number you want that trigonmetric/logarithmic operation to evaluate");
     System.out.println("Do not include any arithmetic inside sin, cos, tan, cot, ln, log10  -  must do only a number after. ENTER IN DEGREES, COMES OUT RADIANS. Example 'sin45'");
     System.out.println("One thing per line entered. Do not do something like '+ 5' all on one line");
@@ -26,11 +26,12 @@ public class Lab2 {
 
     Scanner sc = new Scanner(System.in);
     String s = sc.next();
-
-    if (s.equals("ln0")) {
-      System.out.println("- Infinity");
+   
+   if (s.equals("exit")) {
       return;
     }
+   
+
 
     if (s.equals("-")) {
       previousSign = "-";
@@ -47,7 +48,7 @@ public class Lab2 {
     } else if ((s.equals("*")) || (s.equals("/")) || (s.equals(")")) || (s.equals("}")) || (s.equals("^")) || (s.equals("+"))) {
       System.out.println("Cannot start with that");
       return;
-    } else if ((s.length() > 3) && (lastWasNumber == false)) { // smallest case is ln 0 {
+    } else if ((s.length() > 2) && (lastWasNumber == false)) { // smallest case is ln0 {
       if ((s.substring(0, 3).equals("sin")) || (s.substring(0, 3).equals("cos")) || (s.substring(0, 3).equals("tan")) || (s.substring(0, 3).equals("cot")) || (s.substring(0, 2).equals("ln")) || (s.substring(0, 5).equals("log10"))) {
         if (s.substring(0, 3).equals("sin")) {
           try //try doing .sin(#)     doing try to verify that it is a #
@@ -58,7 +59,12 @@ public class Lab2 {
             double sinValue = Math.sin(radians);
             //System.out.println(sinValue);
             s = Double.toString(sinValue);
-            infix = Double.toString(sinValue);
+            if (sinValue < 0) {
+                //System.out.println("negative");
+                s = "0 - " + s.substring(1, s.length());
+             }
+             infix = s;
+             //System.out.println(infix);
           } catch (Exception e) {
             System.out.println("Not valid");
             return;
@@ -66,13 +72,18 @@ public class Lab2 {
         } else if (s.substring(0, 3).equals("cos")) {
           try //try doing .cos(#)     doing try to verify that it is a #
           {
-            // convert the degrees to radians
-            double radians = Math.toRadians(Double.parseDouble(s.substring(3, s.length())));
-            // calculate the input degrees cos
-            double cosValue = Math.cos(radians);
-            //System.out.println(cosValue);
-            s = Double.toString(cosValue);
-            infix = Double.toString(cosValue);
+             // convert the degrees to radians
+             double radians = Math.toRadians(Double.parseDouble(s.substring(3, s.length())));
+             // calculate the input degrees cos
+             double cosValue = Math.cos(radians);
+             //System.out.println(cosValue);
+             s = Double.toString(cosValue);
+             if (cosValue < 0) {
+                //System.out.println("negative");
+                s = "0 - " + s.substring(1, s.length());
+             }
+             infix = s;
+             //System.out.println(infix);
           } catch (Exception e) {
             System.out.println("Not valid");
             return;
@@ -86,7 +97,12 @@ public class Lab2 {
             double tanValue = Math.tan(radians);
             //System.out.println(tanValue);
             s = Double.toString(tanValue);
-            infix = Double.toString(tanValue);
+            if (tanValue < 0) {
+                //System.out.println("negative");
+                s = "0 - " + s.substring(1, s.length());
+             }
+             infix = s;
+             //System.out.println(infix);
           } catch (Exception e) {
             System.out.println("Not valid");
             return;
@@ -100,7 +116,12 @@ public class Lab2 {
             double cotValue = 1 / (Math.tan(radians));
             //System.out.println(cotValue);
             s = Double.toString(cotValue);
-            infix = Double.toString(cotValue);
+            if (cotValue < 0) {
+                //System.out.println("negative");
+                s = "0 - " + s.substring(1, s.length());
+             }
+             infix = s;
+             //System.out.println(infix);
           } catch (Exception e) {
             System.out.println("Not valid");
             return;
@@ -114,7 +135,12 @@ public class Lab2 {
             double lnVal = Math.log(value);
             //System.out.println(lnVal);
             s = Double.toString(lnVal);
-            infix = Double.toString(lnVal);
+            if (lnVal < 0) {
+                //System.out.println("negative");
+                s = "0 - " + s.substring(1, s.length());
+             }
+             infix = s;
+             //System.out.println(infix);
           } catch (Exception e) {
             System.out.println("Not valid");
             return;
@@ -128,7 +154,12 @@ public class Lab2 {
             double logVal = Math.log10(value);
             //System.out.println(logVal);
             s = Double.toString(logVal);
-            infix = Double.toString(logVal);
+            if (logVal < 0) {
+                //System.out.println("negative");
+                s = "0 - " + s.substring(1, s.length());
+             }
+             infix = s;
+             //System.out.println(infix);
           } catch (Exception e) {
             System.out.println("Not valid");
             return;
@@ -149,7 +180,6 @@ public class Lab2 {
       } else {
         infix = s;
       }
-
     }
 
 
@@ -184,8 +214,12 @@ public class Lab2 {
                     double radians = Math.toRadians(Double.parseDouble(s.substring(3, s.length())));
                     // calculate the input degrees sin
                     double sinValue = Math.sin(radians);
-                    System.out.println(sinValue);
+                    //System.out.println(sinValue);
                     s = Double.toString(sinValue);
+                    if (sinValue < 0) {
+                      //System.out.println("negative");
+                      s = "0 - " + s.substring(1, s.length());
+                    }
                   } catch (Exception e) {
                     System.out.println("Not valid");
                     return;
@@ -199,6 +233,10 @@ public class Lab2 {
                     double cosValue = Math.cos(radians);
                     //System.out.println(cosValue);
                     s = Double.toString(cosValue);
+                    if (cosValue < 0) {
+                      //System.out.println("negative");
+                      s = "0 - " + s.substring(1, s.length());
+                    }
                   } catch (Exception e) {
                     System.out.println("Not valid");
                     return;
@@ -212,6 +250,10 @@ public class Lab2 {
                     double tanValue = Math.tan(radians);
                     //System.out.println(tanValue);
                     s = Double.toString(tanValue);
+                    if (tanValue < 0) {
+                      //System.out.println("negative");
+                      s = "0 - " + s.substring(1, s.length());
+                    }
                   } catch (Exception e) {
                     System.out.println("Not valid");
                     return;
@@ -225,6 +267,10 @@ public class Lab2 {
                     double cotValue = 1 / (Math.tan(radians));
                     //System.out.println(cotValue);
                     s = Double.toString(cotValue);
+                    if (cotValue < 0) {
+                      //System.out.println("negative");
+                      s = "0 - " + s.substring(1, s.length());
+                    }
                   } catch (Exception e) {
                     System.out.println("Not valid");
                     return;
@@ -238,6 +284,10 @@ public class Lab2 {
                     double lnVal = Math.log(value);
                     //System.out.println(lnVal);
                     s = Double.toString(lnVal);
+                    if (lnVal < 0) {
+                      //System.out.println("negative");
+                      s = "0 - " + s.substring(1, s.length());
+                    }
                   } catch (Exception e) {
                     System.out.println("Not valid");
                     return;
@@ -251,6 +301,10 @@ public class Lab2 {
                     // calculate the input degrees tan
                     double logVal = Math.log10(value);
                     s = Double.toString(logVal);
+                    if (logVal < 0) {
+                      //System.out.println("negative");
+                      s = "0 - " + s.substring(1, s.length());
+                    }
                   } catch (Exception e) {
                     System.out.println("Not valid");
                     return;
@@ -333,7 +387,7 @@ public class Lab2 {
 
 
 
-
+  //from the link below. going from infix to postfix and taking into account the precedence of the operation or ()
   //https://rosettacode.org/wiki/Parsing/Shunting-yard_algorithm#Java
   static String infixToPostfix(String infix) {
     /* To find out the precedence, we take the index of the
@@ -423,9 +477,9 @@ public class Lab2 {
 
 
 
-
+  //from this link. going from postfix to parsing || solving it
   //https://rosettacode.org/wiki/Parsing/RPN_calculator_algorithm#Java
-  //added the case of # / 0 - when the token equals '/' case
+  //added the case of # / 0 - when the token equals '/' case to return invalid equation.
 
   private static void evalRPN(String expr) {
     LinkedList < Double > stack = new LinkedList < Double > ();
@@ -453,12 +507,7 @@ public class Lab2 {
         System.out.print("Operate\t\t");
         double secondOperand = stack.pop();
         double firstOperand = stack.pop();
-
-        if (Double.toString(firstOperand).equals("-") && Double.toString(secondOperand).equals("-")) { //added special case of unary - where the left and right are both '-' -> turn into '+'
-          //stack.push('+');
-        } else {
-          stack.push(firstOperand - secondOperand);
-        }
+        stack.push(firstOperand - secondOperand);
       } else if (token.equals("+")) {
         System.out.print("Operate\t\t");
         double secondOperand = stack.pop();
